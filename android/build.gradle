@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        minSdk    21
+        targetSdk 34
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+
+        externalNativeBuild {
+            ndkBuild {
+                // gstreamerRoot is set by the consuming app's gradle.properties
+                // or by the Expo config plugin, or via GSTREAMER_ROOT_ANDROID env var
+                def gstRoot = rootProject.findProperty('gstreamerRoot')
+                              ?: System.getenv('GSTREAMER_ROOT_ANDROID')
+                              ?: ''
+                if (gstRoot) {
+                    arguments "GSTREAMER_ROOT_ANDROID=${gstRoot}"
+                }
+            }
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/jni/Android.mk"
+        }
+    }
+
+    buildTypes {
+        release { minifyEnabled false }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+}

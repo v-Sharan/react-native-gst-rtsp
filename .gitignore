@@ -1,0 +1,16 @@
+node_modules/
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.gradle
+local.properties
+*.iml
+.idea
+.buckd
+build/
+android/.cxx/
+android/build/
+android/app/build/
+android/local.properties

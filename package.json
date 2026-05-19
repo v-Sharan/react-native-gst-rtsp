@@ -1,0 +1,55 @@
+{
+  "name": "react-native-gst-rtsp",
+  "version": "1.0.0",
+  "description": "React Native GStreamer RTSP video player for Android",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/",
+    "android/",
+    "plugin/",
+    "react-native-gst-rtsp.podspec",
+    "app.plugin.js",
+    "README.md"
+  ],
+  "scripts": {
+    "prepare": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "gstreamer",
+    "rtsp",
+    "video",
+    "streaming",
+    "android",
+    "expo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/react-native-gst-rtsp"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "expo": ">=49.0.0",
+    "react": ">=17.0.0",
+    "react-native": ">=0.70.0"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@expo/config-plugins": "^7.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.72.0",
+    "typescript": "^5.0.0"
+  },
+  "expo": {
+    "install": {
+      "exclude": []
+    }
+  },
+  "app.plugin": "./app.plugin.js"
+}
