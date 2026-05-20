@@ -14,8 +14,20 @@ LOCAL_LDLIBS   := -llog -landroid -lEGL -lGLESv2
 LOCAL_CFLAGS   := -Wall -Wno-unused-variable
 include $(BUILD_SHARED_LIBRARY)
 
-GSTREAMER_ROOT            := $(GSTREAMER_ROOT_ANDROID)/$(TARGET_ARCH_ABI)
-GSTREAMER_NDK_BUILD       := $(GSTREAMER_ROOT)/share/gst-android/ndk-build/
+# ── Map NDK ABI names → GStreamer 1.28 folder names ──────────────────────────
+ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
+    GSTREAMER_ROOT := $(GSTREAMER_ROOT_ANDROID)/arm64
+else ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+    GSTREAMER_ROOT := $(GSTREAMER_ROOT_ANDROID)/armv7
+else ifeq ($(TARGET_ARCH_ABI),x86)
+    GSTREAMER_ROOT := $(GSTREAMER_ROOT_ANDROID)/x86
+else ifeq ($(TARGET_ARCH_ABI),x86_64)
+    GSTREAMER_ROOT := $(GSTREAMER_ROOT_ANDROID)/x86_64
+endif
+
+# GStreamer 1.28 moved GStreamer.mk → gstreamer-1.0.mk and the share folder
+# is at the root of the universal package (not per-ABI)
+GSTREAMER_NDK_BUILD := $(GSTREAMER_ROOT_ANDROID)/share/gst-android/ndk-build
 
 GSTREAMER_PLUGINS := \
     coreelements    \
@@ -47,4 +59,10 @@ GSTREAMER_PLUGINS := \
     opengl
 
 GSTREAMER_EXTRA_DEPS := gstreamer-video-1.0 gstreamer-rtsp-1.0
-include $(GSTREAMER_NDK_BUILD)/gstreamer-1.0.mk
+
+# Support both old (GStreamer.mk) and new (gstreamer-1.0.mk) naming
+ifneq ($(wildcard $(GSTREAMER_NDK_BUILD)/gstreamer-1.0.mk),)
+    include $(GSTREAMER_NDK_BUILD)/gstreamer-1.0.mk
+else
+    include $(GSTREAMER_NDK_BUILD)/GStreamer.mk
+endif

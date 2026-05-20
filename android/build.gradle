@@ -3,12 +3,11 @@ plugins {
 }
 
 android {
-    namespace "com.gstrtsp"
-    compileSdk 36
+    compileSdk 34
 
     defaultConfig {
-        minSdk    24
-        targetSdk 36
+        minSdk    21
+        targetSdk 34
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
@@ -16,6 +15,8 @@ android {
 
         externalNativeBuild {
             ndkBuild {
+                // gstreamerRoot is set by the consuming app's gradle.properties
+                // or by the Expo config plugin, or via GSTREAMER_ROOT_ANDROID env var
                 def gstRoot = rootProject.findProperty('gstreamerRoot')
                               ?: System.getenv('GSTREAMER_ROOT_ANDROID')
                               ?: ''
