@@ -47,4 +47,4 @@ GSTREAMER_PLUGINS := \
     opengl
 
 GSTREAMER_EXTRA_DEPS := gstreamer-video-1.0 gstreamer-rtsp-1.0
-include $(GSTREAMER_NDK_BUILD)/GStreamer.mk
+include $(GSTREAMER_NDK_BUILD)/gstreamer-1.0.mk
